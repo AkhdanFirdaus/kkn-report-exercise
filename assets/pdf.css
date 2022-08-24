@@ -1,0 +1,29 @@
+.page_break {
+    page-break-before: always;
+}
+
+* {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 12px;
+    line-height: 1.5em;
+}
+
+@page {
+    margin: 288px;
+}
+
+body {
+    margin: 288px;
+}
+
+ul,
+ol,
+li {
+    margin: 0;
+    padding: 0;
+    list-style-position: inside;
+}
+
+.v-top {
+    vertical-align: top;
+}
