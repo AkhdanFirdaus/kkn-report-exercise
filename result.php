@@ -124,8 +124,15 @@ array_splice($result, 0, 1);
                                                     <button type="button" class="btn btn-primary d-block" onclick="onClickDetail('<?= $profilResult[$i][0] ?>', '<?= $profilResult[$i][1] ?>', '<?= $profilResult[$i][2] ?>', '<?= $profilResult[$i][3] ?>')">Detail</button>
                                                     <form action="action/print_action.php" method="GET">
                                                         <input type="hidden" name="type" value="person">
-                                                        <input type="hidden" name="nama" value="<?= $profilResult[$i][1] ?>">
-                                                        <button name="single_report_button" type="submit" class="btn btn-primary">Print</button>
+                                                        <input type="hidden" name="alias" value="<?= $profilResult[$i][4] ?>">
+                                                        <input type="hidden" name="kategori" value="<?= $profilResult[$i][5] ?>">
+                                                        <button type="submit" class="btn btn-primary">Print</button>
+                                                    </form>
+                                                    <form action="action/print_action.php" method="GET">
+                                                        <input type="hidden" name="type" value="personactivity">
+                                                        <input type="hidden" name="alias" value="<?= $profilResult[$i][4] ?>">
+                                                        <input type="hidden" name="kategori" value="<?= $profilResult[$i][5] ?>">
+                                                        <button type="submit" class="btn btn-primary">Print All</button>
                                                     </form>
                                                 </td>
                                             </tr>

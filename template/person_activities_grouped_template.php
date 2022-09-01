@@ -1,6 +1,13 @@
 <?php
 session_start();
 $sess = $_SESSION['result'];
+$person = $_GET['alias'];
+$kategori = '';
+
+if (isset($_GET['kategori'])) {
+    $kategori = $_GET['kategori'];
+}
+
 
 unset($sess[0]);
 
@@ -14,21 +21,42 @@ foreach ($sess as $key => $value) {
 
     foreach ($sess as $key => $value2) {
         if ($value[1] == $value2[1]) {
-            if ($value2[3] != '-') {
-                $kegiatan[] = $value2[3];
+            
+            if (in_array($person, explode(',', $value[5]))) {
+                if ($value2[3] != '-') {
+                    $kegiatan[] = $value2[3];
+                }
+    
+                if ($value2[4] != '-') {
+                    $deskripsi[] = $value2[4];
+                }
+    
+                if ($value2[5] != '-') {
+                    $partisipan[] = $value2[5];
+                }
+    
+                if ($value2[2] != '-') {
+                    $dokumentasi[] = $value2[2];
+                }
             }
-
-            if ($value2[4] != '-') {
-                $deskripsi[] = $value2[4];
-            }
-
-            if ($value2[5] != '-') {
-                $partisipan[] = $value2[5];
-            }
-
-            if ($value2[2] != '-') {
-                $dokumentasi[] = $value2[2];
-            }
+        
+            // if ($kategori != '' && in_array($kategori, explode(',', $value[5]))) {
+            //     if ($value2[3] != '-') {
+            //         $kegiatan[] = $value2[3];
+            //     }
+    
+            //     if ($value2[4] != '-') {
+            //         $deskripsi[] = $value2[4];
+            //     }
+    
+            //     if ($value2[5] != '-') {
+            //         $partisipan[] = $value2[5];
+            //     }
+    
+            //     if ($value2[2] != '-') {
+            //         $dokumentasi[] = $value2[2];
+            //     }
+            // }
         }
     }
 
@@ -42,6 +70,10 @@ foreach ($sess as $key => $value) {
         'dokumentasi' => $dokumentasi,
     ];
 }
+
+echo '<pre>';
+print_r($result);
+echo '</pre>';
 
 ?>
 <html>
@@ -73,13 +105,7 @@ foreach ($sess as $key => $value) {
 </head>
 
 <body>
-    <div>
-        <center>
-            <h1>KKN Kelompok 131 Desa Cipagalo</h1>
-        </center>
-    </div>
-    <div class="page_break"></div>
-    <?php foreach ($result as $res) : ?>
+    <?php foreach ($result as $key => $res) : ?>
         <div>
             <h1 style="text-align: center;">Laporan Kegiatan Harian <a href="https://kkn.uinsgd.ac.id">KKN UIN Sunan Gunung Djati Bandung</a></h1>
             <br>
@@ -102,64 +128,37 @@ foreach ($sess as $key => $value) {
                 <tr>
                     <th class="top" align="left">Kegiatan</th>
                     <td class="top">:</td>
-                    <td class="center"">
-                        <?php foreach ($res['kegiatan'] as $value) : ?>
-                            <span><?= $value ?>, </span>
-                        <?php endforeach ?>
+                    <td style="text-align: justify;">
+                        <span><?= $res['kegiatan'] ?>, </span>
                     </td>
                 </tr>
                 <tr>
                     <th class="top" align="left">Deskripsi</th>
                     <td class="top">:</td>
-                    <td>
-                        <?php $countDesc = count($res['deskripsi']) ?>
-                        <?php if (count($res['deskripsi']) > 1) : ?>
-                            <ol class="list-unstyled">
-                                <?php foreach ($res['deskripsi'] as $value) : ?>
-                                    <li class="center""><?= $value ?></li>
-                                <?php endforeach ?>
-                            </ol>
-                        <?php else : ?>
-                            <?= $countDesc == 0 ? '-' : $res['deskripsi'][0] ?>
-                        <?php endif ?>
+                    <td style="text-align: justify;">
+                        <?= $res['deskripsi'] ?>
                     </td>
                 </tr>
                 <tr>
                     <th class="top" align="left">Dokumentasi</th>
                     <td class="top">:</td>
                     <td>
-                        <?php $countDoc = count($res['dokumentasi']) ?>
-                        <?php if ($countDoc > 1) : ?>
-                            <ul class="list-unstyled">
-                                <?php for ($i = 0; $i < count($res['dokumentasi']); $i++) : ?>
-                                    <li><a href=" <?= $res['dokumentasi'][$i] ?>">Dokumentasi <?= $res['kegiatan'][$i] ?></a></li>
-                                <?php endfor ?>
-                            </ul>
-                        <?php else : ?>
-                            <?= $countDoc == 0 ? '-' : $res['dokumentasi'][0] ?>
-                        <?php endif ?>
+                        <a href="<?= $res['dokumentasi'] ?>">Link Dokumentasi</a>
                     </td>
                 </tr>
                 <tr>
                     <th class="top" align="left">Partisipan</th>
                     <td class="top">:</td>
                     <td>
-                        <?php $countDoc = count($res['partisipan']) ?>
-                        <?php if ($countDoc > 1) : ?>
-                            <ul class="list-unstyled">
-                                <?php foreach ($res['partisipan'] as $value) : ?>
-                                    <li><?= $value ?></li>
-                                <?php endforeach ?>
-                            </ul>
-                        <?php else : ?>
-                            <?= $countDoc == 0 ? '-' : $res['dokumentasi'][0] ?>
-                        <?php endif ?>
+                        <?= $res['partisipan'] ?>
                     </td>
                 </tr>
                 </tbody>
             </table>
         </div>
-        <div class="page_break"></div>
+        <?php if (($key + 1) % count($result) != 0) : ?>
+            <div style="page-break-before: always;"></div>
+        <?php endif ?>
     <?php endforeach ?>
 </body>
 
