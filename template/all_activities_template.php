@@ -102,7 +102,7 @@ foreach ($sess as $key => $value) {
                 <tr>
                     <th class="top" align="left">Kegiatan</th>
                     <td class="top">:</td>
-                    <td class="center"">
+                    <td class="center">
                         <?php foreach ($res['kegiatan'] as $value) : ?>
                             <span><?= $value ?>, </span>
                         <?php endforeach ?>

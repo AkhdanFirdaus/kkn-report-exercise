@@ -35,10 +35,11 @@ switch ($type) {
         break;
     case 'personactivity':
         ob_start();
-        require('../template/person_activities_grouped_template.php');
-        $dompdf->loadHtml(ob_get_clean());
+        $dompdf->loadHtml(require('../template/person_activities_grouped_template.php'));
+        // require('../template/person_activities_grouped_template.php');
+        // $dompdf->loadHtml(ob_get_clean());
         $dompdf->render();
-        $dompdf->stream('laporan_kegiatan_' . $_GET['alias'] . '.pdf');
+        // $dompdf->stream('laporan_kegiatan_' . $_GET['alias'] . '.pdf');
         break;
     default:
         break;

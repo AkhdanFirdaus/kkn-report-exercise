@@ -115,28 +115,36 @@ array_splice($result, 0, 1);
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <?php for ($i = 0; $i < count($profilResult); $i++) : ?>
+                                        <?php foreach ($profilResult as $profile) : ?>
                                             <tr>
                                                 <td class="px-2 py-1"><?= $i + 1 ?></td>
-                                                <td class="px-2 py-1"><?= $profilResult[$i][0] ?></td>
-                                                <td class="px-2 py-1"><?= $profilResult[$i][1] ?></td>
+                                                <td class="px-2 py-1"><?= $profile[0] ?></td>
+                                                <td class="px-2 py-1"><?= $profile[1] ?></td>
                                                 <td class="px-2 py-1">
                                                     <button type="button" class="btn btn-primary d-block" onclick="onClickDetail('<?= $profilResult[$i][0] ?>', '<?= $profilResult[$i][1] ?>', '<?= $profilResult[$i][2] ?>', '<?= $profilResult[$i][3] ?>')">Detail</button>
                                                     <form action="action/print_action.php" method="GET">
                                                         <input type="hidden" name="type" value="person">
-                                                        <input type="hidden" name="alias" value="<?= $profilResult[$i][4] ?>">
-                                                        <input type="hidden" name="kategori" value="<?= $profilResult[$i][5] ?>">
+                                                        <input type="hidden" name="alias" value="<?= $profile[4] ?>">
+                                                        <input type="hidden" name="kategori" value="<?= $profile[5] ?>">
+                                                        <input type="hidden" name="NIM" value="<?= $profile[0] ?>">
+                                                        <input type="hidden" name="NAMA" value="<?= $profile[1] ?>">
+                                                        <input type="hidden" name="Fakultas" value="<?= $profile[2] ?>">
+                                                        <input type="hidden" name="Jurusan" value="<?= $profile[3] ?>">
                                                         <button type="submit" class="btn btn-primary">Print</button>
                                                     </form>
                                                     <form action="action/print_action.php" method="GET">
                                                         <input type="hidden" name="type" value="personactivity">
-                                                        <input type="hidden" name="alias" value="<?= $profilResult[$i][4] ?>">
-                                                        <input type="hidden" name="kategori" value="<?= $profilResult[$i][5] ?>">
+                                                        <input type="hidden" name="alias" value="<?= $profile[4] ?>">
+                                                        <input type="hidden" name="kategori" value="<?= $profile[5] ?>">
+                                                        <input type="hidden" name="NIM" value="<?= $profile[0] ?>">
+                                                        <input type="hidden" name="NAMA" value="<?= $profile[1] ?>">
+                                                        <input type="hidden" name="Fakultas" value="<?= $profile[2] ?>">
+                                                        <input type="hidden" name="Jurusan" value="<?= $profile[3] ?>">
                                                         <button type="submit" class="btn btn-primary">Print All</button>
                                                     </form>
                                                 </td>
                                             </tr>
-                                        <?php endfor ?>
+                                        <?php endforeach ?>
                                     </tbody>
                                 </table>
                             <?php endif; ?>
