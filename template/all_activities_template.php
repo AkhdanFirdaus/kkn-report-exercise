@@ -80,16 +80,28 @@ foreach ($sess as $key => $value) {
 
 <body>
     <div>
-        <h1 class="center">KKN Kelompok 131 Desa Cipagalo</h1>
+        <h2 class="center">LAPORAN KEGIATAN</h2>
+        <h2 class="center">KKN KELOMPOK 131 DESA CIPAGALO</h2>
+        <br>
+        <br>
         <center>
-            <img width="28%" src="data:image/jpeg;base64,<?= $logodata ?>" alt="logo" style="margin: 0 auto; text-align:center; display:block;">
+            <img width="30%" src="data:image/jpeg;base64,<?= $logodata ?>" alt="logo" style="margin: 0 auto; text-align:center; display:block;">
         </center>
-        <h2 class="center">DPL : Neng Gustini, S.Pd., M.Pd</h2>
+        <br>
+        <br>
+        <h3 class="center">DPL     : Neng Gustini, S.Pd., M.Pd</h3>
+        <h3 class="center">Ketua   : <?= $profileResult[13][1] ?> (<?= $profileResult[13][0] ?>)</h3>
+        <h3 class="center">Anggota :</h3>
         <div style="width: 24rem; margin:0 auto;">
             <ul>
-                <?php foreach ($profileResult as $profile) : ?>
+                <?php foreach ($profileResult as $key => $profile) : 
+                    if ($key != 13) :
+                ?>
                     <li><?= "$profile[1] ($profile[0])" ?></li>                    
-                <?php endforeach ?>
+                <?php
+                    endif; 
+                    endforeach; 
+                ?>
             </ul>
         </div>
         <h1 class="center">UIN Sunan Gunung Djati Bandung</h1>

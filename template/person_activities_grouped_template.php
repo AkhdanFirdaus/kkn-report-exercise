@@ -95,11 +95,17 @@ foreach ($sess as $key => $value) {
 <body>
     <div>
         <center>
-            <h1>KKN Kelompok 131 Desa Cipagalo</h1>
-            <img width="28%" src="data:image/jpeg;base64,<?= $logodata ?>" alt="logo" style="margin: 0 auto; text-align:center; display:block;">
+            <h2>LAPORAN KEGIATAN</h2>
+            <h2>KKN KELOMPOK 131 DESA CIPAGALO</h2>
+            <br>
+            <br>
+            <img width="30%" src="data:image/jpeg;base64,<?= $logodata ?>" alt="logo" style="margin: 0 auto; text-align:center; display:block;">
+            <br>
+            <br>
             <h2><?= "$nama ($nim)" ?></h2>
             <h2><?= "Jurusan $jurusan" ?></h2>
             <h2><?= "Fakultas $fakultas" ?></h2>
+            <h2>UIN Sunan Gunung Djati Bandung</h2>
         </center>
     </div>
     <?php foreach ($result as $key => $res) : ?>
