@@ -7,34 +7,6 @@ array_splice($profilResult, 0, 1);
 $result = $_SESSION['result'];
 array_splice($result, 0, 1);
 
-$htmlResult = '';
-
-if (isset($result)) {
-    $htmlResult .= '<table class="table-auto border-collapse border border-slate-400 w-100">';
-    $htmlResult .= '<thead>';
-    $htmlResult .= '<tr>';
-    $htmlResult .= '<th class="border border-slate-300 px-3 py-1.5">No</th>';
-    $htmlResult .= '<th class="border border-slate-300 px-3 py-1.5">Hari</th>';
-    $htmlResult .= '<th class="border border-slate-300 px-3 py-1.5">Tanggal</th>';
-    $htmlResult .= '<th class="border border-slate-300 px-3 py-1.5">Kegiatan</th>';
-    $htmlResult .= '<th class="border border-slate-300 px-3 py-1.5">#</th>';
-    $htmlResult .= '</tr>';
-    $htmlResult .= '</thead>';
-    $htmlResult .= '<tbody>';
-    for ($i = 0; $i < count($result); $i++) {
-        $htmlResult .= '<tr>';
-        $htmlResult .= '<td class="border border-slate-300 px-3 py-1.5">' . $i + 1 . '</td>';
-        $htmlResult .= '<td class="border border-slate-300 px-3 py-1.5">' . $result[$i][0] . '</td>';
-        $htmlResult .= '<td class="border border-slate-300 px-3 py-1.5">' . $result[$i][1] . '</td>';
-        $htmlResult .= '<td class="border border-slate-300 px-3 py-1.5">' . $result[$i][3] . '</td>';
-        $htmlResult .= '<td class="border border-slate-300 px-3 py-1.5">';
-        $htmlResult .= '<a href="" class="bg-purple-500 text-white rounded px-2 py-1.5">Print</a>';
-        $htmlResult .= '</td>';
-        $htmlResult .= '</tr>';
-    }
-    $htmlResult .= '</tbody>';
-    $htmlResult .= '</table>';
-}
 ?>
 
 <!DOCTYPE html>
@@ -45,98 +17,161 @@ if (isset($result)) {
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hasil</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
 </head>
 
 <body>
-    <div class="grid grid-cols-2 gap-4 m-5">
-        <div class="bg-white shadow rounded px-6 py-8 flex flex-col space-y-4">
-            <span class="text-2xl font-bold"><?= count($profilResult) - 1 ?> Anggota Tim</span>
-            <h1>Profil Tim</h1>
-            <div class="block">
-                <button type="button" id="cta-team-button" class="bg-purple-500 text-white px-2 py-1.5 rounded shadow">Lihat Profil Anggota</button>
-            </div>
-        </div>
-        <div class="bg-white shadow rounded px-6 py-8 flex flex-col space-y-4">
-            <span class="text-2xl font-bold"><?= count($result) ?></span>
-            <h1>Kegiatan</h1>
-            <div class="block">
-                <button type="button" id="cta-logbook-button" class="bg-purple-500 text-white px-2 py-1.5 rounded shadow">Lihat Kegiatan</button>
-            </div>
-        </div>
-    </div>
-    <div>
-        <div id="logbook-container" class="p-5 bg-slate-500 hidden">
-            <div class="bg-white rounded px-6 py-8 shadow">
-                <div class="flex justify-between flex-row w-full">
-                    <form method="POST" action="all_activities_report.php" class="inline-block">
-                        <h1 class="font-bold text-2xl inline-block">Logbook</h1>
-                        <button type="submit" name="print_button" class="px-3 py-1.2 rounded bg-purple-500 text-white">Print All</button>
-                    </form>
+    <div class="container my-5">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <span class="text-2xl font-bold"><?= count($profilResult) - 1 ?> Anggota Tim</span>
+                        <h1>Profil Tim</h1>
+                        <div class="block">
+                            <button type="button" id="cta-team-button" class="btn btn-primary">Lihat Profil Anggota</button>
+                        </div>
+                    </div>
                 </div>
-                <div class="my-8"></div>
-                <div class="table-responsive">
-                    <?php $i = 1;
-                    if (isset($htmlResult)) {
-                        echo $htmlResult;
-                    } ?>
+            </div>
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <span class="text-2xl font-bold"><?= count($result) ?></span>
+                        <h1>Kegiatan</h1>
+                        <div class="block">
+                            <button type="button" id="cta-logbook-button" class="btn btn-primary">Lihat Kegiatan</button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-        <div id="team-container" class="p-5 bg-slate-500 hidden">
-            <div class="bg-white rounded px-6 py-8 shadow">
-                <div class="grid grid-cols-2 gap-4 m-5">
-                    <div>
-                        <h1 class="font-bold text-2xl">Profil</h1>
-                        <div class="my-8"></div>
-                        <?php $i = 1;
-                        if (isset($profilResult)) : ?>
-                            <table class="table-auto border-collapse border border-slate-400">
-                                <thead>
-                                    <tr>
-                                        <th class="border border-slate-300 px-3 py-1.5">No</th>
-                                        <th class="border border-slate-300 px-3 py-1.5">NIM</th>
-                                        <th class="border border-slate-300 px-3 py-1.5">Nama</th>
-                                        <th class="border border-slate-300 px-3 py-1.5">#</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <?php for ($i = 0; $i < count($profilResult); $i++) : ?>
+        <div class="my-5">
+            <div id="logbook-container" class="card">
+                <div class="card-header">
+                    <div class="d-flex justify-content-between">
+                        <h1 class="font-bold text-2xl inline-block">Kegiatan</h1>
+                        <form action="action/print_action.php" method="GET">
+                            <input type="hidden" name="type" value="all">
+                            <button type="submit" class="btn btn-primary">Print All</button>
+                        </form>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="my-8"></div>
+                    <div class="table-responsive">
+                        <table class="table table-auto border-collapse border border-slate-400 w-100">
+                            <thead>
+                                <tr>
+                                    <th class="border border-slate-300 px-3 py-1.5">No</th>
+                                    <th class="border border-slate-300 px-3 py-1.5">Hari</th>
+                                    <th class="border border-slate-300 px-3 py-1.5">Tanggal</th>
+                                    <th class="border border-slate-300 px-3 py-1.5">Kegiatan</th>
+                                    <th class="border border-slate-300 px-3 py-1.5">#</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php if (isset($result)) : ?>
+                                    <?php for ($i = 0; $i < count($result); $i++) : ?>
                                         <tr>
                                             <td class="border border-slate-300 px-3 py-1.5"><?= $i + 1 ?></td>
-                                            <td class="border border-slate-300 px-3 py-1.5"><?= $profilResult[$i][0] ?></td>
-                                            <td class="border border-slate-300 px-3 py-1.5"><?= $profilResult[$i][1] ?></td>
+                                            <td class="border border-slate-300 px-3 py-1.5"><?= $result[$i][0] ?></td>
+                                            <td class="border border-slate-300 px-3 py-1.5"><?= $result[$i][1] ?></td>
+                                            <td class="border border-slate-300 px-3 py-1.5"><?= $result[$i][3] ?></td>
                                             <td class="border border-slate-300 px-3 py-1.5">
-                                                <button type="button" class="bg-purple-500 text-white rounded px-2 py-1.5" onclick="onClickDetail('<?= $profilResult[$i][0] ?>', '<?= $profilResult[$i][1] ?>', '<?= $profilResult[$i][2] ?>', '<?= $profilResult[$i][3] ?>')">Detail</button>
-                                                <form action="single_report.php" class="inline-block" method="GET">
-                                                    <input type="hidden" name="nama" value="<?= $profilResult[$i][1] ?>">
-                                                    <button name="single_report_button" type="submit" class="bg-purple-500 text-white rounded px-2 py-1.5">Print</button>
+                                                <form action="action/print_action.php" method="GET">
+                                                    <input type="hidden" name="type" value="single">
+                                                    <input type="hidden" name="kegiatan" value="<?= $result[$i][3] ?>">
+                                                    <button type="submit" class="btn btn-primary">Print</button>
                                                 </form>
                                             </td>
                                         </tr>
                                     <?php endfor ?>
-                                </tbody>
-                            </table>
-                        <?php endif; ?>
+                                <?php else : ?>
+                                    <tr>
+                                        <td colspan="6">Tidak Ada Data</td>
+                                    </tr>
+                                <?php endif ?>
+                            </tbody>
+                        </table>
                     </div>
-                    <div id="team-detail-container" class="bg-slate-200 rounded p-5">
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Praesentium, omnis modi autem placeat voluptatum ducimus, error eius nisi et vitae culpa adipisci quia? Accusantium ipsa obcaecati at quasi accusamus rem!
+                </div>
+            </div>
+            <div id="team-container" class="card">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h1 class="font-bold text-2xl">Profil</h1>
+                            <div class="my-8"></div>
+                            <?php $i = 1;
+                            if (isset($profilResult)) : ?>
+                                <table class="table-auto border-collapse border border-slate-400">
+                                    <thead>
+                                        <tr>
+                                            <th class="border border-slate-300 px-3 py-1.5">No</th>
+                                            <th class="border border-slate-300 px-3 py-1.5">NIM</th>
+                                            <th class="border border-slate-300 px-3 py-1.5">Nama</th>
+                                            <th class="border border-slate-300 px-3 py-1.5">#</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <?php foreach ($profilResult as $profile) : ?>
+                                            <tr>
+                                                <td class="px-2 py-1"><?= $i + 1 ?></td>
+                                                <td class="px-2 py-1"><?= $profile[0] ?></td>
+                                                <td class="px-2 py-1"><?= $profile[1] ?></td>
+                                                <td class="px-2 py-1">
+                                                    <button type="button" class="btn btn-primary d-block" onclick="onClickDetail('<?= $profilResult[$i][0] ?>', '<?= $profilResult[$i][1] ?>', '<?= $profilResult[$i][2] ?>', '<?= $profilResult[$i][3] ?>')">Detail</button>
+                                                    <form action="action/print_action.php" method="GET">
+                                                        <input type="hidden" name="type" value="person">
+                                                        <input type="hidden" name="alias" value="<?= $profile[4] ?>">
+                                                        <input type="hidden" name="kategori" value="<?= $profile[5] ?>">
+                                                        <input type="hidden" name="NIM" value="<?= $profile[0] ?>">
+                                                        <input type="hidden" name="NAMA" value="<?= $profile[1] ?>">
+                                                        <input type="hidden" name="Fakultas" value="<?= $profile[2] ?>">
+                                                        <input type="hidden" name="Jurusan" value="<?= $profile[3] ?>">
+                                                        <button type="submit" class="btn btn-primary">Print</button>
+                                                    </form>
+                                                    <form action="action/print_action.php" method="GET">
+                                                        <input type="hidden" name="type" value="personactivity">
+                                                        <input type="hidden" name="alias" value="<?= $profile[4] ?>">
+                                                        <input type="hidden" name="kategori" value="<?= $profile[5] ?>">
+                                                        <input type="hidden" name="NIM" value="<?= $profile[0] ?>">
+                                                        <input type="hidden" name="NAMA" value="<?= $profile[1] ?>">
+                                                        <input type="hidden" name="Fakultas" value="<?= $profile[2] ?>">
+                                                        <input type="hidden" name="Jurusan" value="<?= $profile[3] ?>">
+                                                        <button type="submit" class="btn btn-primary">Print All</button>
+                                                    </form>
+                                                </td>
+                                            </tr>
+                                        <?php endforeach ?>
+                                    </tbody>
+                                </table>
+                            <?php endif; ?>
+                        </div>
+                        <div id="team-detail-container" class="col-md-6">
+                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Praesentium, omnis modi autem placeat voluptatum ducimus, error eius nisi et vitae culpa adipisci quia? Accusantium ipsa obcaecati at quasi accusamus rem!
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    <script src="assets/js/bootstrap.bundle.min.js"></script>
     <script>
         const logbookContainer = document.getElementById('logbook-container')
         const teamContainer = document.getElementById('team-container')
         const teamDetailContainer = document.getElementById('team-detail-container')
 
+        logbookContainer.classList.add('d-none')
+        teamContainer.classList.add('d-none')
+
         document.getElementById('cta-logbook-button').addEventListener('click', function() {
-            logbookContainer.classList.toggle('hidden')
+            logbookContainer.classList.toggle('d-none')
         })
 
         document.getElementById('cta-team-button').addEventListener('click', function() {
-            teamContainer.classList.toggle('hidden')
+            teamContainer.classList.toggle('d-none')
         })
 
         function onClickDetail(nim, nama, fakultas, jurusan) {
