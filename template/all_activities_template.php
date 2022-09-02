@@ -1,6 +1,8 @@
 <?php
 session_start();
 $sess = $_SESSION['result'];
+$profileResult = $_SESSION['profilResult'];
+array_splice($profileResult, 0, 1);
 
 unset($sess[0]);
 
@@ -56,8 +58,12 @@ foreach ($sess as $key => $value) {
             vertical-align: top;
         }
 
-        .center {
+        .justify {
             text-align: justify;
+        }
+
+        .center {
+            text-align: center;
         }
 
         ol.list-unstyled, ul.list-unstyled {
@@ -74,14 +80,24 @@ foreach ($sess as $key => $value) {
 
 <body>
     <div>
+        <h1 class="center">KKN Kelompok 131 Desa Cipagalo</h1>
         <center>
-            <h1>KKN Kelompok 131 Desa Cipagalo</h1>
+            <img width="28%" src="data:image/jpeg;base64,<?= $logodata ?>" alt="logo" style="margin: 0 auto; text-align:center; display:block;">
         </center>
+        <h2 class="center">DPL : Neng Gustini, S.Pd., M.Pd</h2>
+        <div style="width: 24rem; margin:0 auto;">
+            <ul>
+                <?php foreach ($profileResult as $profile) : ?>
+                    <li><?= "$profile[1] ($profile[0])" ?></li>                    
+                <?php endforeach ?>
+            </ul>
+        </div>
+        <h1 class="center">UIN Sunan Gunung Djati Bandung</h1>
     </div>
-    <div class="page_break"></div>
     <?php foreach ($result as $res) : ?>
+        <div class="page_break"></div>
         <div>
-            <h1 style="text-align: center;">Laporan Kegiatan Harian <a href="https://kkn.uinsgd.ac.id">KKN UIN Sunan Gunung Djati Bandung</a></h1>
+            <h1 class="center">Laporan Kegiatan Harian <a href="https://kkn.uinsgd.ac.id">KKN UIN Sunan Gunung Djati Bandung</a></h1>
             <br>
             <table>
                 <tr>
@@ -102,7 +118,7 @@ foreach ($sess as $key => $value) {
                 <tr>
                     <th class="top" align="left">Kegiatan</th>
                     <td class="top">:</td>
-                    <td class="center">
+                    <td class="justify">
                         <?php foreach ($res['kegiatan'] as $value) : ?>
                             <span><?= $value ?>, </span>
                         <?php endforeach ?>
@@ -116,7 +132,7 @@ foreach ($sess as $key => $value) {
                         <?php if (count($res['deskripsi']) > 1) : ?>
                             <ol class="list-unstyled">
                                 <?php foreach ($res['deskripsi'] as $value) : ?>
-                                    <li class="center""><?= $value ?></li>
+                                    <li class="justify""><?= $value ?></li>
                                 <?php endforeach ?>
                             </ol>
                         <?php else : ?>
@@ -136,7 +152,7 @@ foreach ($sess as $key => $value) {
                                 <?php endfor ?>
                             </ul>
                         <?php else : ?>
-                            <?= $countDoc == 0 ? '-' : $res['dokumentasi'][0] ?>
+                            <?= $countDoc == 0 ? '-' : '<a href="'. $res['dokumentasi'][0] . '">' . $res['kegiatan'][0] . '</a>' ?>
                         <?php endif ?>
                     </td>
                 </tr>
@@ -146,20 +162,19 @@ foreach ($sess as $key => $value) {
                     <td>
                         <?php $countDoc = count($res['partisipan']) ?>
                         <?php if ($countDoc > 1) : ?>
-                            <ul class="list-unstyled">
+                            <ol class="list-unstyled">
                                 <?php foreach ($res['partisipan'] as $value) : ?>
                                     <li><?= $value ?></li>
                                 <?php endforeach ?>
-                            </ul>
+                            </ol>
                         <?php else : ?>
-                            <?= $countDoc == 0 ? '-' : $res['dokumentasi'][0] ?>
+                            <?= $countDoc == 0 ? '-' : $res['partisipan'][0] ?>
                         <?php endif ?>
                     </td>
                 </tr>
                 </tbody>
             </table>
         </div>
-        <div class="page_break"></div>
     <?php endforeach ?>
 </body>
 
